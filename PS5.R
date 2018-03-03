@@ -81,16 +81,31 @@ checkLength(Simpson2) ## test
 
 Simpson3 = newSimpson(p,q)
 
-checkX = function(object){
-sub_x = setdiff(object@x, max(object@x)) ## creates a new vector of x values without the highest one
-difference = max(object@x)-max(sub_x) ## takes the difference between the highest and second highest x value
-even_spaced = seq(min(object@x), max(object@x), difference) ## creates a vector from the minimum x value to the maximum x value spaced evenly by the value of difference
-test1 = (even_spaced == object@x) ##  returns a logical vector indicating whether all the elements of x and the evenly spaced vector are the same
-if (all(test1) != TRUE){ ## tests if all the elements of the logical vector are true and send an error message if not
-  return("x values must be evenly spaced")} 
-else{
-  return(TRUE)}
-}
+checkSpacing = function(object){ ## creates a function to check if x values are evenly spaced
+  sub_x = setdiff(object@x, max(object@x)) ## creates a new vector of x values without the highest one
+  difference = max(object@x)-max(sub_x) ## takes the difference between the highest and second highest x value
+  even_spaced = seq(min(object@x), max(object@x), difference) ## creates a vector from the minimum x value to the maximum x value spaced evenly by the value of difference
+  test1 = (even_spaced == object@x) ##  returns a logical vector indicating whether all the elements of x and the evenly spaced vector are the same
+  if (all(test1) != TRUE){ ## tests if all the elements of the logical vector are true and sends an error message if not
+    return("x values must be evenly spaced")} 
+  else{
+    return(TRUE)}
+  }
 
-checkX(Simpson2) ## test
-checkX(Simpson3) ## test
+checkSpacing(Simpson2) ## test
+checkSpacing(Simpson3) ## test
+
+checkN = function(object){ ## creates a function to check if n is odd (necessary for Simpson's rule)
+  n = length(object@x) ## takes the length of the vector of x values
+  test1 = ((n-1) %% 2 == 0) ## checks if n - 1 is evenly divisble by 2 and if not sends an error message
+  if (test1 != TRUE){
+    return("there must be an odd number of x values")}
+  else{
+    return(TRUE)}
+  }
+
+checkN(Simpson2) ## test
+checkN(Simpson3) ## test
+
+
+
