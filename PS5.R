@@ -80,6 +80,7 @@ checkLength(Simpson1) ## test
 checkLength(Simpson2) ## test
 
 Simpson3 = newSimpson(p,q)
+Simpson4 = newSimpson(1:4, 5:8)
 
 checkSpacing = function(object){ ## creates a function to check if x values are evenly spaced
   sub_x = setdiff(object@x, max(object@x)) ## creates a new vector of x values without the highest one
@@ -95,7 +96,7 @@ checkSpacing = function(object){ ## creates a function to check if x values are 
 checkSpacing(Simpson2) ## test
 checkSpacing(Simpson3) ## test
 
-checkN = function(object){ ## creates a function to check if n is odd (necessary for Simpson's rule)
+checkIntervals = function(object){ ## creates a function to check if n is odd (necessary for Simpson's rule)
   n = length(object@x) ## takes the length of the vector of x values
   test1 = ((n-1) %% 2 == 0) ## checks if n - 1 is evenly divisble by 2 and if not sends an error message
   if (test1 != TRUE){
@@ -104,8 +105,41 @@ checkN = function(object){ ## creates a function to check if n is odd (necessary
     return(TRUE)}
   }
 
-checkN(Simpson2) ## test
-checkN(Simpson3) ## test
+checkIntervals(Simpson2) ## test
+checkIntervals(Simpson3) ## test
 
+checkValidityTrap = function(object){ ## feeds checkLength and checkSpacing into validity function for trapezoid
+  if (checkLength(object) != TRUE | checkSpacing(object) != TRUE){ ## returns an error message if either test does not pass
+    return("object is not a valid value")}
+  else{
+    return(TRUE)}
+  }
 
+checkValidityTrap(Trap1) ## test
+checkValidityTrap(Trap2) ## test
 
+setValidity("Trapezoid", checkValidityTrap) ## sets checkValidityTrap as the constraints for an object to be of class trapezoid
+
+validObject(Trap1) ## test
+validObject(Trap2) ## test
+
+Trap1 = newTrapezoid(q,z) ## test
+Trap2 = newTrapezoid(z,w) ## test
+Trap3 = newTrapezoid(p,q) ## test
+Trap4 = newTrapezoid(1:4, 5:8)
+
+checkValiditySimpson = function(object){ ## feeds checkLength, checkSpacing, and checkIntervals into validity function for simpson
+  if (checkLength(object) != TRUE | checkSpacing(object) != TRUE | checkIntervals(object) != TRUE){ ## returns an error message if either test does not pass
+    return("object is not a valid value")}
+  else{
+    return(TRUE)}
+}
+
+checkValiditySimpson(Simpson1) ## test
+checkValiditySimpson(Simpson2) ## test
+checkValiditySimpson(Simpson4) ## test
+
+setValidity("Simpson", checkValiditySimpson) ## sets checkValiditySimpson as the constraints for an object to be of class simpson
+
+Simpson1 = newSimpson(1:4, 1:4) ## test
+Simpson2 = newSimpson(1:5, 5:9) ## test
