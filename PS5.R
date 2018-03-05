@@ -67,6 +67,27 @@ newIntegral = function(x, y, z){ ## construction function takes in 3 arguments; 
   return(object) ## returns the object
 }
 
+checkRuleIntegral = function(object){ ## creates a function that forces the rule input to be Trapezoid or Simpson
+  if(object@rule != "Simpson" & object@rule != "Trapezoid"){
+    return("rule must be 'Simpson' or 'Trapezoid'")}
+  else{
+    return(TRUE)}
+}
+
+checkRuleIntegral(newIntegral(1:4, 1:4, "Trapezoid"))
+
+checkValidityIntegral = function(object){ ## feeds checkRuleIntegral into validity function for Integral
+  if (checkRuleIntegral(object) != TRUE){ ## returns an error message if the test does not pass
+    return("object is not a valid value")}
+  else{
+    return(TRUE)}
+}
+
+setValidity("Integral", checkValidityIntegral) ## sets checkValidityIntegral as the constraints for an object to be of class Integral
+
+newIntegral(1:4, 1:4, "Trapezoid")
+newIntegral(1:4, 1:4, "Face")
+
 Simpson1 = newSimpson(q, z, "Simpson") ## check
 Trap1 = newTrapezoid(q, z, "Trapezoid") ## check
 
@@ -217,6 +238,9 @@ setMethod("print", signature("Integral"), ## creates a new method for print that
 )
 
 Integral = newIntegral(1:4, 1:4, "Trapezoid") ## test integral
+print(Integral) ## test
+
+Integral4 = newIntegral(1:4, 1:4, "Sam") ## test integral
 print(Integral) ## test
 
 Integral1 = newIntegral(1:5, 5:9, "Simpson") ## test integral
