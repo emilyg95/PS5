@@ -1,11 +1,16 @@
-#' Class Simpson
+#' Create New Simpson
 #'
-#' An S4 class to represent a set of points to be integrated using Simpson's rule
+#' Creates a new object of S4 class Simpson
 #'
 #' @slot x A numeric object
 #' @slot y A numeric object with the same dimensionality as \code{x}.
 #' @slot rule A character object "Simpson" indicating class 
 #'
+#' @return A list with the elements
+#'  \item{x}{The first object input} 
+#'  \item{y}{The second object input}
+#'  \item{z}{The third object input}
+#'  
 #' @author Emily Garner<\email{emily.garner@@wustl.edu}>
 #'
 #' @seealso classTrapezoid, classIntegral
@@ -67,24 +72,16 @@ setMethod("initialize", "Simpson",
             return(value)
           }
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#' @export
+setMethod("initialize", "Simpson",
+          function(.Object, ...){
+            value = callNextMethod()
+            validObject(value)
+            return(value)
+          }
+)
+#'
+newSimpson = function(x, y, z){ ## construction function takes in 3 arguments; x, y, and rule
+  object = new("Simpson", x = x, y = y, rule = z) ## creates a new object setting the 3 inputs as defined for class Simpson
+  return(object) ## returns the object
+}

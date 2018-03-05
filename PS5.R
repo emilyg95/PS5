@@ -253,3 +253,15 @@ print(Integral2) ## test
 
 Integral3 = newIntegral(1:5, c(3,5,12,15), "Trapezoid") ## test integral
 print(Integral3) ## test
+
+## package development tools
+install.packages("devtools")
+install.packages("roxygen2")
+
+library(devtools)
+library(roxygen2)
+
+setwd("/Users/emilygarner/Documents/School/Second Sem/R/Problem Sets/PS5") ## sets wd to where I want my integratePack located
+
+devtools::create("integratePack") ## creates the skeleton for my package
+
