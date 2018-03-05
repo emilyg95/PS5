@@ -18,8 +18,8 @@
 #' newIntegral(myX, myY, "Simpson")
 #' @seealso classSimpson, classTrapezoid, classIntegral, newIntegral, newTrapezoid
 #' @rdname newSimpson
-#' @export
 #' @include classSimpson.R
+#' @export
 newSimpson = function(x, y, z){ ## construction function takes in 3 arguments; x, y, and rule
   object = new("Simpson", x = x, y = y, rule = z) ## creates a new object setting the 3 inputs as defined for class Simpson
   return(object) ## returns the object

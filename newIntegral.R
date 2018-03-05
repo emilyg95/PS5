@@ -18,8 +18,8 @@
 #' newIntegral(myX, myY, "Trapezoid")
 #' @seealso classSimpson, classTrapezoid, classIntegral, newSimpson, newTrapezoid
 #' @rdname newIntegral
-#' @export
 #' @include classIntegral.R
+#' @export
 newIntegral = function(x, y, z){ ## construction function takes in 3 arguments; x, y, and rule
   object = new("Integral", x = x, y = y, rule = z) ## creates a new object setting the 3 inputs as defined for class Integral
   return(object) ## returns the object

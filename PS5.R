@@ -1,3 +1,5 @@
+## this is my development file
+
 z = 1:5 ## test vector
 q = 1:5 ## test vector
 w = 1:6 ## test vector
@@ -33,8 +35,8 @@ Simpson = function(x, y){ ## formula for simpson's rule that takes in arguments 
   return(s)
 }
 
-Simpson(q, z) ## check
-Simpson(1:5, 5:9)
+Simpson(q, z) ## test
+Simpson(1:5, 5:9) ## test
 
 setClass(Class = "Integral", ## creates a new class "Integral"
          representation = representation(
@@ -214,12 +216,12 @@ setMethod("integrateIt", signature("Simpson"), ## creates a method of integrateI
 
 integrateIt(newSimpson(1:5, 1:5, "Simpson")) ## test
 
-setGeneric("print", function(object){ ## sets generic function print
+setGeneric("print", function(object){ ## I understand this is unnecessary becaue print already has a generic but I did it and it works so I'm going to leave it
   standardGeneric("print")}
 )
     
 setMethod("print", signature("Integral"), ## creates a new method for print that takes objects of class integral (parent class of trapezoid and simpson)
-          function(object){
+          function(object){ ## even though print usually takes the argument "x" this works because I defined a new generic that takes "object"
             if(object@rule == "Trapezoid"){ ## creates a new object of class trapezoid using inputs if rule selected is trapezoid (so that validity tests designed for trapezoid will be run)
               Trapezoid = newTrapezoid(object@x, object@y, object@rule)
               x = Trapezoid@x ## defines x and y values from inputs
