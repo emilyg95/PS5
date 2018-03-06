@@ -30,7 +30,12 @@ Simpson = function(x, y){ ## formula for simpson's rule that takes in arguments 
   remove = c(a_y, b_y) ## creates a new vector of min and max y values
   sub_y = setdiff(y, remove) ## creates a new vector of all y values except min and max
   odd_y = seq(min(sub_y),max(sub_y),2) ## subsets the new vector of y values further into every other
-  even_y = seq(min(sub_y)+1,max(sub_y),2) ## takes the other half of the new vector of y values
+  if(length(sub_y) > 1){
+    even_y = seq(min(sub_y)+1,max(sub_y),2) ## takes the other half of the new vector of y values
+  }
+  else{
+    even_y = 0 ## if else statements ensures error isn't thrown if the vector of x values only contains 3 numbers
+  }
   s = (h/3)*(a_y + b_y + sum(4*odd_y) + sum(2*even_y)) ## calculates s as in simpson's rule
   return(s)
 }
@@ -86,6 +91,7 @@ checkValidityIntegral = function(object){ ## feeds checkRuleIntegral into validi
 }
 
 setValidity("Integral", checkValidityIntegral) ## sets checkValidityIntegral as the constraints for an object to be of class Integral
+## Integral does not require more constraints because the only specified constraint forces a subclass to be called whenever it is used, which has its own constraints
 
 newIntegral(1:4, 1:4, "Trapezoid")
 newIntegral(1:4, 1:4, "Face")
@@ -216,7 +222,7 @@ setMethod("integrateIt", signature("Simpson"), ## creates a method of integrateI
 
 integrateIt(newSimpson(1:5, 1:5, "Simpson")) ## test
 
-setGeneric("print", function(object){ ## I understand this is unnecessary becaue print already has a generic but I did it and it works so I'm going to leave it
+setGeneric("print", function(object){ ##  This step is actually unnecessary so I took it out in my package file
   standardGeneric("print")}
 )
     
@@ -263,5 +269,26 @@ library(roxygen2)
 
 setwd("/Users/emilygarner/Documents/School/Second Sem/R/Problem Sets/PS5") ## sets wd to where I want my integratePack located
 
-devtools::create("integratePack") ## creates the skeleton for my package
+devtools::create("integratePack") ## creates the structure for my package
 
+rm(list=ls(all=TRUE)) ## wiping environment to test package
+
+current.code <- as.package("integratePack")
+load_all(current.code)
+document(current.code) ## creating package
+
+newIntegral(c(3,12), c(3,6), "Trapezoid") ## test - works
+
+newTrapezoid(c(3,6), c(3,6), "Simpson") ## test
+newTrapezoid(c(3,6), c(3,6), "Trapezoid") ## test - works
+
+newSimpson(c(3,6), c(3,6), "Simpson") ## test
+newSimpson(c(3,6,9), c(3,12,14), "Simpson") ## test
+
+integrateIt(newSimpson(c(3,6,9,12,15), c(3,12,14,3,5), "Simpson")) ## test
+integrateIt(newTrapezoid(c(3,6,9,12,15), c(3,12,14,3,5), "Trapezoid")) ## test
+integrateIt(newIntegral(c(3,6,9,12,15), c(3,12,14,3,5), "Trapezoid")) ## test
+integrateIt(newSimpson(c(3,6,9), c(3,12,14), "Simpson")) ## test
+
+print(newIntegral(c(3,6,9,12,15), c(3,12,14,3,5), "Trapezoid")) ## test
+print(newIntegral(c(3,6,9,12,15), c(3,12,14,3,5), "Simpson")) ## test

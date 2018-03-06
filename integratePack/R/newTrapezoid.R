@@ -1,9 +1,9 @@
-#' Create New Trapezoid
+#' Create new Trapezoid
 #'
 #' Creates a new object of S4 class Trapezoid
 #'
-#' @slot x A numeric object
-#' @slot y A numeric object with the same dimensionality as \code{x}.
+#' @slot x A numeric object indicating a set of points on the x axis increasing in value in equal increments
+#' @slot y A numeric object with the same dimensionality as \code{x} indicating a set of points on the y axis to be integrated over
 #' @slot rule A character object "Trapezoid" indicating class 
 #'
 #'#'
@@ -13,15 +13,19 @@
 #'  \item{z}{The third object input}
 #'  
 #' @author Emily Garner<\email{emily.garner@@wustl.edu}>
-#'
-#' @seealso classIntegral, classSimpson
-#' @rdname classTrapezoid
-#' @include classIntegral.R
-#' @export
+#' @examples
+#' 
+#' myX <- seq(3,12,3) 
+#' myY <- c(2, 5, 12, 8) 
+#' newIntegral <- (myX, myY, "Trapezoid")
+#' @seealso newIntegral, newSimpson
+#' @rdname newTrapezoid
+#' @include newIntegral.R
+#' @exportClass Trapezoid
 setClass(Class = "Trapezoid", ## creates a new class "Trapezoid"
          contains = "Integral"
 ) ## inherits inputs from class Integral
-#'
+
 checkLength = function(object){ ## creates a function to check if x and y are the same length and returns error message if not
   test1 = (length(object@x) == length(object@y))
   if (!test1){
@@ -29,7 +33,7 @@ checkLength = function(object){ ## creates a function to check if x and y are th
   else{
     return(TRUE)}
 }
-#'
+
 checkSpacing = function(object){ ## creates a function to check if x values are evenly spaced
   sub_x = setdiff(object@x, max(object@x)) ## creates a new vector of x values without the highest one
   difference = max(object@x)-max(sub_x) ## takes the difference between the highest and second highest x value
@@ -40,32 +44,24 @@ checkSpacing = function(object){ ## creates a function to check if x values are 
   else{
     return(TRUE)}
 }
-#'
+
 checkRuleTrap = function(object){ ## creates a function that forces the rule input to be Trapezoid
   if(object@rule != "Trapezoid"){
     return("rule must be 'Trapezoid'")}
   else{
     return(TRUE)}
 }
-#'
+
 checkValidityTrap = function(object){ ## feeds checkLength, checkSpacing, and checkRuleTrap into validity function for trapezoid
   if (checkLength(object) != TRUE | checkSpacing(object) != TRUE | checkRuleTrap(object) != TRUE){ ## returns an error message if any test does not pass
     return("object is not a valid value")}
   else{
     return(TRUE)}
 }
-#'
+
 setValidity("Trapezoid", checkValidityTrap) ## sets checkValidityTrap as the constraints for an object to be of class trapezoid
-#'
+
 #' @export
-#' setMethod("initialize", "Trapezoid",
-function(.Object, ...){
-  value = callNextMethod()
-  validObject(value)
-  return(value)
-}
-)
-#'
 newTrapezoid = function(x, y, z){ ## construction function takes in 3 arguments; x, y, and rule
   object = new("Trapezoid", x = x, y = y, rule = z) ## creates a new object setting the 3 inputs as defined for class Trapezoid
   return(object) ## returns the object
