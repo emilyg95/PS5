@@ -199,6 +199,7 @@ generic = function(object){ ## creates the interior function for set generic
 
 setGeneric("integrateIt", generic) ## sets the generic function of integrateIt as generic
 
+## in my package files I define the functions Trap and Simpson within setMethod rather than calling them from the global environment as I do here
 setMethod("integrateIt", signature("Trapezoid"), ## creates a method of integrateIt for objects of class Trapezoid
           function(object){ ## defines x and y inputs as numbers
             x = object@x
@@ -227,7 +228,7 @@ setGeneric("print", function(object){ ##  This step is actually unnecessary so I
 )
     
 setMethod("print", signature("Integral"), ## creates a new method for print that takes objects of class integral (parent class of trapezoid and simpson)
-          function(object){ ## even though print usually takes the argument "x" this works because I defined a new generic that takes "object"
+          function(object){ ## here I use object because I overwrote print with my own generic that takes object as an input, but in my package file I use "x" which is the input the existing generic print function takes
             if(object@rule == "Trapezoid"){ ## creates a new object of class trapezoid using inputs if rule selected is trapezoid (so that validity tests designed for trapezoid will be run)
               Trapezoid = newTrapezoid(object@x, object@y, object@rule)
               x = Trapezoid@x ## defines x and y values from inputs
