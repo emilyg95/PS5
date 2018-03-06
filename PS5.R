@@ -116,7 +116,7 @@ checkSpacing = function(object){ ## creates a function to check if x values are 
   even_spaced = seq(min(object@x), max(object@x), difference) ## creates a vector from the minimum x value to the maximum x value spaced evenly by the value of difference
   test1 = (even_spaced == object@x) ##  returns a logical vector indicating whether all the elements of x and the evenly spaced vector are the same
   if (all(test1) != TRUE){ ## tests if all the elements of the logical vector are true and sends an error message if not
-    return("x values must be evenly spaced")} 
+    return("x values must be increasing and evenly distributed")} 
   else{
     return(TRUE)}
   }
@@ -281,7 +281,8 @@ document(current.code) ## creating package
 newIntegral(c(3,12), c(3,6), "Trapezoid") ## test - works
 
 newTrapezoid(c(3,6), c(3,6), "Simpson") ## test
-newTrapezoid(c(3,6), c(3,6), "Trapezoid") ## test - works
+newTrapezoid(c(6,5), c(3,6), "Trapezoid") ## test
+newTrapezoid(c(3,6), c(3,6), "Trapezoid") ## test
 
 newSimpson(c(3,6), c(3,6), "Simpson") ## test
 newSimpson(c(3,6,9), c(3,12,14), "Simpson") ## test

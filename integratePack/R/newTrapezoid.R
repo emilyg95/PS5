@@ -34,13 +34,13 @@ checkLength = function(object){ ## creates a function to check if x and y are th
     return(TRUE)}
 }
 
-checkSpacing = function(object){ ## creates a function to check if x values are evenly spaced
+checkSpacing = function(object){ ## creates a function to check if x values are evenly spaced and increasing
   sub_x = setdiff(object@x, max(object@x)) ## creates a new vector of x values without the highest one
   difference = max(object@x)-max(sub_x) ## takes the difference between the highest and second highest x value
   even_spaced = seq(min(object@x), max(object@x), difference) ## creates a vector from the minimum x value to the maximum x value spaced evenly by the value of difference
   test1 = (even_spaced == object@x) ##  returns a logical vector indicating whether all the elements of x and the evenly spaced vector are the same
   if (all(test1) != TRUE){ ## tests if all the elements of the logical vector are true and sends an error message if not
-    return("x values must be evenly spaced")} 
+    return("x values must be increasing and evenly distributed")} 
   else{
     return(TRUE)}
 }
